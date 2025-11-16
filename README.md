@@ -1,236 +1,80 @@
-# US Collisions (2016-2023): Forecasting Collision Trends
+# US Traffic Accident Forecasting 🚗📊
 
-A comprehensive data science project analyzing and forecasting US traffic collision trends using advanced feature engineering and machine learning models.
+Deep learning models for predicting daily traffic accident counts using 2016-2023 US accident data.
 
-**Author:** Mario Cuevas
+![Model Improvements](results/week3_improvements.png)
 
-## Table of Contents
+## 🎯 Key Results
 
-- [Overview](#overview)
-- [Project Structure](#project-structure)
-- [Dataset](#dataset)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Key Features](#key-features)
-- [Models](#models)
-- [Results](#results)
-- [License](#license)
+| Model | R² Score | Improvement | Status |
+|-------|----------|-------------|--------|
+| **GRU (Optimized)** | **0.415** | **+128%** | ✅ Best DL Model |
+| LSTM + Attention | 0.297 | +270% | ✅ Strong |
+| TCN | 0.201 | +264% | ✅ Good |
+| Transformer | 0.027 | +244% | ⚠️ Needs Work |
+| Random Forest (Baseline) | 0.55 | - | 🎯 Target |
 
-## Overview
+**Achievement:** Improved GRU from R² = 0.182 → 0.415 in 2 hours through configuration optimization!
 
-This project analyzes 7.7+ million traffic accident records from 2016-2023 to forecast collision trends across the United States. Using advanced feature engineering, time-series analysis, and machine learning techniques, we predict daily accident counts and severity levels.
+## 📊 Dataset
 
-### Objectives
+- **Source:** [US Accidents (2016-2023) - Kaggle](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents)
+- **Size:** 7.7M accident records, 49 states
+- **Processed:** ~2,500 daily observations, 22 engineered features
 
-1. **Exploratory Data Analysis (EDA)** - Understand patterns in US traffic collisions
-2. **Feature Engineering** - Create advanced temporal and weather-based features
-3. **Baseline Modeling** - Build and compare forecasting models (Prophet, Random Forest)
-4. **Severity Classification** - Predict accident severity using environmental factors
+## 🚀 Quick Start
 
-## Project Structure
-
-```
-US-Collisions-2016-2023-Forecasting-Collision-Trends/
-├── README.md                          # Main project description
-├── .gitignore                         # Files to ignore
-├── requirements.txt                   # Python dependencies
-│
-├── notebooks/                         # All Jupyter notebooks
-│   ├── Week1_EDA.ipynb               # Week 1 exploratory analysis
-│   └── Week2_Feature_Engineering.ipynb  # Week 2 modeling
-│
-├── data/                              # Data files
-│   ├── processed/
-│   │   ├── daily_accidents_features.csv
-│   │   └── model_comparison.csv
-│   └── README.md                      # Data description
-│
-├── reports/                           # Project reports (PDFs)
-│   ├── Week1_Report.pdf
-│   └── Week2_Report.pdf
-│
-├── visualizations/                    # HTML/PNG visualizations
-│   ├── EDA_Report.html
-│   └── US_Accidents_Map.html
-│
-└── src/                               # Python utility scripts
-    └── utils.py                       # Helper functions
-```
-
-## Dataset
-
-**Source:** [US Accidents (2016-2023)](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents)
-
-**License:** CC-BY-NC-SA-4.0
-
-**Size:** 7.7M+ accident records, 2.9GB uncompressed
-
-**Date Range:** February 2016 - March 2023
-
-**Features Used:**
-- Temporal: Date, time, location
-- Weather: Temperature, humidity, visibility, wind speed, precipitation
-- Severity: Accident severity levels (1-4)
-
-### Citation
-
-```
-Moosavi, Sobhan, et al. "A Countrywide Traffic Accident Dataset." (2019).
-Moosavi, Sobhan, et al. "Accident Risk Prediction based on Heterogeneous Sparse Data:
-New Dataset and Insights." ACM SIGSPATIAL (2019).
-```
-
-## Installation
-
-### Prerequisites
-
-- Python 3.9+
-- pip package manager
-- Kaggle account (for dataset download)
-
-### Setup
-
-1. Clone the repository:
 ```bash
-git clone https://github.com/MarioStacksnQueues/US-Collisions-2016-2023-Forecasting-Collision-Trends.git
-cd US-Collisions-2016-2023-Forecasting-Collision-Trends
-```
-
-2. Install dependencies:
-```bash
+# Install dependencies
 pip install -r requirements.txt
+
+# Run notebook in Google Colab or Jupyter
+jupyter notebook notebooks/Week3_DeepLearning.ipynb
 ```
 
-3. Set up Kaggle credentials:
-```bash
-# Download kaggle.json from https://www.kaggle.com/settings
-mkdir -p ~/.kaggle
-cp /path/to/kaggle.json ~/.kaggle/kaggle.json
-chmod 600 ~/.kaggle/kaggle.json
+## 🔬 Methodology
+
+### Week 2: Baselines
+- Random Forest: R² = 0.55 ✓
+- Prophet: R² = 0.14
+
+### Week 3: Deep Learning
+**Quick Fixes Applied:**
+1. Forecast horizon: 7 days → 1 day
+2. Lookback window: 30 days → 14 days  
+3. Epochs: 50 → 100
+4. Simplified architecture
+
+**Results:** GRU reached 75% of RF baseline!
+
+## 🛠️ Tech Stack
+
+Python 3.8+ | TensorFlow | Scikit-learn | Pandas | Plotly
+
+## 📁 Structure
+
+```
+├── notebooks/          # Jupyter notebooks
+├── models/             # Saved models  
+├── results/            # Performance metrics & visualizations
+├── reports/            # Documentation
+└── requirements.txt    # Dependencies
 ```
 
-4. Launch Jupyter:
-```bash
-jupyter notebook
-```
+## 🎯 Next Steps (Week 4)
 
-## Usage
+- [ ] Hyperparameter optimization with Optuna
+- [ ] Target: R² > 0.60 (beat baseline!)
+- [ ] Feature ablation studies
 
-### Week 1: Exploratory Data Analysis
+## 👤 Author
 
-Open `notebooks/Week1_EDA.ipynb` to:
-- Download and explore the US Accidents dataset
-- Analyze accident distribution by state, month, and severity
-- Generate interactive visualizations and reports
+**Mario Cuevas** - ML Coursework Project
 
-**Outputs:**
-- `visualizations/EDA_Report.html` - SweetViz EDA report
-- `visualizations/US_Accidents_Map.html` - Interactive accident map
+## 📄 License
 
-### Week 2: Feature Engineering & Modeling
-
-Open `notebooks/Week2_Feature_Engineering.ipynb` to:
-- Create advanced temporal features (rolling averages, lag variables)
-- Generate weather risk index
-- Train and compare forecasting models
-- Evaluate model performance
-
-**Outputs:**
-- `data/processed/daily_accidents_features.csv` - Engineered features dataset
-- `data/processed/model_comparison.csv` - Model performance metrics
-
-### Using Utility Functions
-
-```python
-from src.utils import (
-    load_daily_features,
-    create_rolling_features,
-    create_lag_features,
-    calculate_metrics
-)
-
-# Load processed data
-df = load_daily_features('data/processed/daily_accidents_features.csv')
-
-# Create custom features
-df = create_rolling_features(df, column='Accident_Count', windows=[7, 30])
-df = create_lag_features(df, column='Accident_Count', lags=[1, 7, 14])
-```
-
-## Key Features
-
-### Engineered Features
-
-1. **Temporal Features**
-   - Rolling means (7-day, 30-day)
-   - Lag features (1, 3, 7, 14, 30 days)
-   - Hour of day, day of week, month, season
-   - Weekend and rush hour indicators
-
-2. **Weather Risk Index**
-   - Composite score from 5 weather variables
-   - Weighted by impact on accident likelihood
-   - Formula: `0.3×visibility + 0.3×precip + 0.2×wind + 0.2×humidity`
-
-3. **Statistical Aggregations**
-   - Daily accident counts
-   - Average severity per day
-   - Weather condition averages
-
-## Models
-
-### 1. Facebook Prophet
-- **Type:** Time-series forecasting
-- **Features:** Trend, seasonality, weather regressors
-- **Use Case:** Capturing long-term trends and seasonal patterns
-
-### 2. Random Forest Regressor
-- **Type:** Ensemble machine learning
-- **Features:** 17 engineered features (weather, lags, rolling stats)
-- **Use Case:** Capturing complex non-linear relationships
-
-### 3. Random Forest Classifier (Bonus)
-- **Type:** Multi-class classification
-- **Target:** Accident severity (1-4)
-- **Use Case:** Predicting severity based on conditions
-
-## Results
-
-### Model Comparison
-
-| Model | MAE | RMSE | MAPE (%) | R² |
-|-------|-----|------|----------|-----|
-| Prophet | ~X.XX | ~X.XX | ~X.XX | ~0.XXX |
-| Random Forest | ~X.XX | ~X.XX | ~X.XX | ~0.XXX |
-
-*See `data/processed/model_comparison.csv` for detailed metrics*
-
-### Key Insights
-
-1. **Temporal Patterns:** Accident counts show strong seasonal and weekly patterns
-2. **Weather Impact:** Low visibility and high precipitation significantly increase accidents
-3. **Lag Importance:** Previous day's accident count is highly predictive
-4. **Top States:** CA, TX, FL account for largest share of accidents
-
-## Future Work
-
-- [ ] Implement LSTM/GRU neural networks for sequence modeling
-- [ ] Add spatial features (road type, urban/rural classification)
-- [ ] Incorporate real-time traffic data
-- [ ] Deploy forecasting API
-- [ ] State-level granular forecasts
-
-## License
-
-This project uses data under the CC-BY-NC-SA-4.0 license from Kaggle.
-
-## Acknowledgments
-
-- **Dataset:** Sobhan Moosavi et al. (Kaggle)
-- **Tools:** Python, Dask, scikit-learn, Prophet, Folium, SweetViz
+MIT License
 
 ---
 
-**Contact:** [Your Contact Information]
-
-**Repository:** https://github.com/MarioStacksnQueues/US-Collisions-2016-2023-Forecasting-Collision-Trends
+⭐ Star if helpful! | 🚧 Status: Week 3 Complete, Week 4 In Progress
