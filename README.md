@@ -120,39 +120,6 @@ jupyter notebook
 - **Visualization:** Matplotlib, Seaborn, Plotly
 - **Optimization:** Optuna
 
-## 📁 Project Structure
-
-```
-us-traffic-accident-forecasting/
-│
-├── data/
-│   └── processed/
-│       └── daily_accidents_features.csv    # Engineered features
-│
-├── notebooks/
-│   ├── Week1_EDA.ipynb                     # Exploratory analysis
-│   ├── Week2_Feature_Engineering.ipynb     # Baseline models
-│   └── Week3_DeepLearning.ipynb            # Deep learning models
-│
-├── models/
-│   ├── gru_model.h5                        # Best GRU model
-│   └── tcn_model.h5                        # TCN model
-│
-├── results/
-│   ├── model_comparison_results.csv        # Performance metrics
-│   ├── model_predictions.csv               # Sample predictions
-│   └── week3_improvements.png              # Before/after visualization
-│
-├── src/
-│   └── utils.py                            # Helper functions
-│
-├── visualizations/
-│   ├── EDA_Report.html                     # Interactive EDA
-│   └── US_Accidents_Map.html               # Geographic visualization
-│
-├── .gitignore
-├── README.md                               # This file
-└── requirements.txt                        # Dependencies
 ```
 
 ## 📈 Results Summary
@@ -177,19 +144,6 @@ Week 3 Optimized (GRU, quick fixes):
 ✅ **Model complexity** must match data size  
 ✅ **Deep learning viable** when properly configured  
 
-## 🎯 Future Work
-
-### Week 4 (In Progress)
-- [ ] Hyperparameter optimization using Optuna
-- [ ] Target: R² > 0.60 (beat Random Forest baseline)
-- [ ] Feature ablation studies
-- [ ] Final technical report
-
-### Long-term
-- [ ] Multi-step forecasting (3, 7, 14 days)
-- [ ] State-level models
-- [ ] Real-time prediction dashboard
-- [ ] Weather API integration
 
 ## 🔍 Key Insights
 
@@ -211,7 +165,7 @@ Week 3 Optimized (GRU, quick fixes):
    - Configuration >> Architecture choice
    - Week 4 optimization will push past baseline
 
-## 📊 Visualizations
+##  Visualizations
 
 Interactive visualizations available in `visualizations/`:
 
@@ -240,10 +194,4 @@ MIT License - Free to use for educational purposes
 - Course instructors and peers
 - TensorFlow/Keras community
 
----
 
-⭐ **Star this repo if helpful!**
-
-📊 **Status:** Week 3 Complete ✅ | Week 4 In Progress 🚧
-
-🎯 **Goal:** Beat R² = 0.55 baseline with optimized deep learning
