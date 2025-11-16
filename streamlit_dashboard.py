@@ -11,9 +11,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 from datetime import datetime, timedelta
-import os
 
 # Page configuration
 st.set_page_config(
@@ -23,7 +21,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS
 st.markdown("""
     <style>
     .main {
@@ -48,11 +45,20 @@ st.markdown("""
 def load_data():
     """Load model predictions and results"""
     try:
-        # Load predictions from results folder
         predictions = pd.read_csv('results/model_predictions.csv')
-        predictions['Date'] = pd.to_datetime(predictions['Date'])
         
-        # Load model comparison from results folder
+        start_date = datetime(2023, 1, 1)  # Adjust based on your data
+        predictions['Date'] = [start_date + timedelta(days=i) for i in range(len(predictions))]
+        
+        column_mapping = {
+            'LSTM_Pred': 'LSTM + Attention',
+            'GRU_Pred': 'GRU',
+            'TCN_Pred': 'TCN',
+            'Transformer_Pred': 'Transformer',
+            'Actual': 'Actual'
+        }
+        predictions = predictions.rename(columns=column_mapping)
+        
         comparison = pd.read_csv('results/model_comparison_results.csv')
         
         return predictions, comparison
@@ -64,41 +70,39 @@ def load_data():
         results/model_comparison_results.csv
         """)
         return None, None
+    except Exception as e:
+        st.error(f"Error loading data: {e}")
+        st.info("Check that your CSV files have the correct format")
+        return None, None
 
 # ============================================================================
 # MAIN APP
 # ============================================================================
 
 def main():
-    # Title
     st.title("🚗 US Traffic Accident Forecasting Dashboard")
     st.markdown("### Deep Learning Model Analysis & Predictions")
     st.markdown("---")
     
-    # Load data
     predictions, comparison = load_data()
     if predictions is None:
         st.stop()
     
-    # Sidebar
     with st.sidebar:
         st.markdown("## 📊 Dashboard Controls")
         
-        # Model selection
         st.markdown("### Model Selection")
         available_models = [col for col in predictions.columns if col not in ['Date', 'Actual']]
         selected_model = st.selectbox(
             "Choose Model",
             available_models,
-            index=0
+            index=1  # Default to GRU
         )
         
-        # State filter (if available)
         st.markdown("### Filters")
         show_all_data = st.checkbox("Show all available data", value=True)
         
         if not show_all_data:
-            # Date range selector
             min_date = predictions['Date'].min()
             max_date = predictions['Date'].max()
             
@@ -288,7 +292,6 @@ def main():
         st.plotly_chart(fig_residuals, use_container_width=True)
     
     with col2:
-        # Residual distribution
         fig_hist = go.Figure()
         
         fig_hist.add_trace(go.Histogram(
@@ -314,10 +317,8 @@ def main():
     
     st.markdown("## 📊 Accuracy Analysis by Day of Week")
     
-    # Add day of week
     filtered_predictions['DayOfWeek'] = filtered_predictions['Date'].dt.day_name()
     
-    # Calculate MAE by day of week
     dow_mae = []
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     
@@ -354,16 +355,13 @@ def main():
     
     st.markdown("## 📋 Detailed Predictions")
     
-    # Prepare display data
     display_data = filtered_predictions.copy()
     display_data['Error'] = (display_data['Actual'] - display_data[selected_model]).round(3)
-    display_data['Error %'] = ((display_data['Error'] / display_data['Actual']) * 100).round(2)
+    display_data['Error %'] = ((display_data['Error'] / (display_data['Actual'] + 1e-10)) * 100).round(2)
     
-    # Select columns to display
     display_columns = ['Date', 'Actual', selected_model, 'Error', 'Error %', 'DayOfWeek']
     display_data = display_data[display_columns]
     
-    # Show top N rows
     n_rows = st.slider("Number of rows to display", 10, 100, 20)
     
     st.dataframe(
@@ -372,7 +370,6 @@ def main():
         use_container_width=True
     )
     
-    # Download button
     csv = display_data.to_csv(index=False)
     st.download_button(
         label="📥 Download Full Predictions",
