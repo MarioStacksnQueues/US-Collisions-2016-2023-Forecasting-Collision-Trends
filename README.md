@@ -338,15 +338,7 @@ This is an academic project, but suggestions and feedback are welcome!
 - PyTorch and Streamlit teams for excellent documentation
 - Anthropic Claude for development assistance
 
----
 
-## 📊 Project Stats
-
-![Languages](https://img.shields.io/github/languages/top/mariostacksqueues/US-Collisions-2016-2023-Forecasting-Collision-Trends)
-![Code Size](https://img.shields.io/github/languages/code-size/mariostacksqueues/US-Collisions-2016-2023-Forecasting-Collision-Trends)
-![Last Commit](https://img.shields.io/github/last-commit/mariostacksqueues/US-Collisions-2016-2023-Forecasting-Collision-Trends)
-
----
 
 **⭐ Star this repo if you found it helpful!**
 
