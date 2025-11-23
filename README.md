@@ -7,7 +7,7 @@
 
 A comprehensive machine learning project applying deep learning and traditional statistical methods to forecast US traffic accident trends using 7.7 million collision records (2016-2023).
 
-**Live Dashboard:** [Streamlit App](https://us-collisions-forecast.streamlit.app) | **Dataset:** [Kaggle](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents)
+**Live Dashboard:** [Streamlit App](https://us-collisions-2016-2023-forecasting-collision-trends-hqxcepft2.streamlit.app/) | **Dataset:** [Kaggle](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents)
 
 ---
 
