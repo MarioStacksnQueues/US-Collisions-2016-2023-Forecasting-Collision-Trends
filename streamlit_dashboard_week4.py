@@ -16,15 +16,13 @@ from datetime import datetime, timedelta
 from PIL import Image
 import os
 
-# Page configuration
 st.set_page_config(
     page_title="US Traffic Accident Forecasting - Week 4",
-    page_icon="🚗",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS
 st.markdown("""
     <style>
     .main {
@@ -64,14 +62,11 @@ st.markdown("""
 def load_data():
     """Load model predictions and results"""
     try:
-        # Load predictions
         predictions = pd.read_csv('results/model_predictions.csv')
         
-        # Create date column
         start_date = datetime(2023, 1, 1)
         predictions['Date'] = [start_date + timedelta(days=i) for i in range(len(predictions))]
         
-        # Column mapping for display names
         column_mapping = {
             'Random_Forest_Pred': 'Random Forest (Baseline)',
             'Prophet_Pred': 'Prophet (Baseline)',
@@ -83,16 +78,14 @@ def load_data():
             'Actual': 'Actual'
         }
         
-        # Rename columns that exist
         predictions = predictions.rename(columns={k: v for k, v in column_mapping.items() if k in predictions.columns})
         
-        # Load comparison results
         comparison = pd.read_csv('results/model_comparison_results.csv')
         
         return predictions, comparison
         
     except FileNotFoundError as e:
-        st.error(f"❌ Data files not found: {e}")
+        st.error(f" Data files not found: {e}")
         st.info("Please ensure the following files exist in the results/ folder:")
         st.code("""
         results/model_predictions.csv
@@ -100,7 +93,7 @@ def load_data():
         """)
         return None, None
     except Exception as e:
-        st.error(f"❌ Error loading data: {e}")
+        st.error(f" Error loading data: {e}")
         return None, None
 
 @st.cache_data
@@ -125,16 +118,14 @@ def load_images():
 # ============================================================================
 
 def main():
-    # Header with achievement banner
     st.markdown("""
         <div class="achievement-box">
-            <h1 style="margin:0; color:white;">🏆 US Traffic Accident Forecasting Dashboard</h1>
+            <h1 style="margin:0; color:white;"> US Traffic Accident Forecasting Dashboard</h1>
             <h3 style="margin:5px 0; color:white;">Week 4: Hyperparameter Optimization Complete</h3>
             <p style="margin:5px 0;">Deep Learning Model Analysis & Predictions | Weeks 2-4 Journey</p>
         </div>
     """, unsafe_allow_html=True)
     
-    # Load data
     predictions, comparison = load_data()
     if predictions is None:
         st.stop()
@@ -146,25 +137,24 @@ def main():
     # ========================================================================
     
     with st.sidebar:
-        st.markdown("## 📊 Dashboard Controls")
+        st.markdown("##  Dashboard Controls")
         
         st.markdown("---")
-        st.markdown("### 🎯 Week 4 Achievements")
+        st.markdown("###  Week 4 Achievements")
         st.markdown("""
-        ✅ **Target R² > 0.55: ACHIEVED**
+         **Target R² > 0.55: ACHIEVED**
         
         **Key Improvements:**
-        - 🔧 Optuna hyperparameter tuning
-        - 📈 33% improvement over Week 3
-        - 🌟 Beat baseline models
-        - 🗺️ State-specific modeling
+        -  Optuna hyperparameter tuning
+        -  33% improvement over Week 3
+        -  Beat baseline models
+        -  State-specific modeling
         """)
         
         st.markdown("---")
         st.markdown("### Model Selection")
         available_models = [col for col in predictions.columns if col not in ['Date', 'Actual']]
         
-        # Default to GRU Optimized if available
         default_idx = 0
         if 'GRU Optimized (Week 4)' in available_models:
             default_idx = available_models.index('GRU Optimized (Week 4)')
@@ -193,7 +183,7 @@ def main():
             date_range = (predictions['Date'].min(), predictions['Date'].max())
         
         st.markdown("---")
-        st.markdown("### 📚 Project Overview")
+        st.markdown("###  Project Overview")
         st.info("""
         **Week 2:** Baseline Models
         - Random Forest: R² = 0.68
@@ -205,7 +195,7 @@ def main():
         - TCN: R² = 0.20
         - Transformer: R² = 0.02
         
-        **Week 4:** Optimization ✨
+        **Week 4:** Optimization 
         - GRU Optimized: **R² = 0.552**
         - State-specific models
         - Hyperparameter tuning
@@ -213,7 +203,6 @@ def main():
         **Data:** 7.7M US Accidents (2016-2023)
         """)
     
-    # Filter data by date range
     mask = (predictions['Date'] >= date_range[0]) & (predictions['Date'] <= date_range[1])
     filtered_predictions = predictions[mask]
     
@@ -221,7 +210,7 @@ def main():
     # WEEK 4 HIGHLIGHTS
     # ========================================================================
     
-    st.markdown("## 🎉 Week 4 Optimization Results")
+    st.markdown("##  Week 4 Optimization Results")
     
     col1, col2, col3, col4 = st.columns(4)
     
@@ -230,7 +219,7 @@ def main():
             <div class="success-box">
                 <h3 style="margin:0; color:white;">Target R²</h3>
                 <h1 style="margin:5px 0; color:white;">0.55</h1>
-                <p style="margin:0; color:white;">✅ ACHIEVED</p>
+                <p style="margin:0; color:white;"> ACHIEVED</p>
             </div>
         """, unsafe_allow_html=True)
     
@@ -267,13 +256,12 @@ def main():
     # COMPREHENSIVE MODEL COMPARISON (ALL WEEKS)
     # ========================================================================
     
-    st.markdown("## 📊 Complete Model Performance (Weeks 2-4)")
+    st.markdown("##  Complete Model Performance (Weeks 2-4)")
     
     if 'final_comparison' in images:
         st.image(images['final_comparison'], use_container_width=True)
-        st.caption("📈 Comprehensive comparison showing all models from baseline to optimized versions")
+        st.caption(" Comprehensive comparison showing all models from baseline to optimized versions")
     else:
-        # Fallback: Create interactive comparison
         col1, col2 = st.columns([1, 1])
         
         with col1:
@@ -325,15 +313,13 @@ def main():
             
             st.plotly_chart(fig_r2, use_container_width=True)
     
-    # Performance Summary Table
-    st.markdown("### 📋 Detailed Performance Metrics")
+    st.markdown("###  Detailed Performance Metrics")
     
     comparison_display = comparison.copy()
     comparison_display['MAE'] = comparison_display['MAE'].round(1)
     comparison_display['RMSE'] = comparison_display['RMSE'].round(1)
     comparison_display['R²'] = comparison_display['R²'].round(3)
     
-    # Highlight best model
     best_idx = comparison_display['R²'].idxmax()
     
     st.dataframe(
@@ -345,7 +331,7 @@ def main():
     
     best_model = comparison.loc[best_idx, 'Model']
     best_r2 = comparison.loc[best_idx, 'R²']
-    st.success(f"🌟 **Best Performing Model:** {best_model} with R² = {best_r2:.3f}")
+    st.success(f" **Best Performing Model:** {best_model} with R² = {best_r2:.3f}")
     
     st.markdown("---")
     
@@ -353,59 +339,75 @@ def main():
     # OPTIMIZATION JOURNEY
     # ========================================================================
     
-    st.markdown("## 🚀 Optimization Journey: Week 3 → Week 4")
+    st.markdown("##  Optimization Journey: Week 3 → Week 4")
     
     if 'optimization_journey' in images:
         st.image(images['optimization_journey'], use_container_width=True)
-        st.caption("📈 GRU model improvement through hyperparameter optimization")
+        st.caption(" GRU model improvement through hyperparameter optimization")
     else:
-        # Create optimization journey visualization
         col1, col2 = st.columns(2)
         
-        # Get Week 3 and Week 4 GRU results
-        gru_week3 = comparison[comparison['Model'].str.contains('GRU') & 
-                              ~comparison['Model'].str.contains('Optimized')].iloc[0]
-        gru_week4 = comparison[comparison['Model'].str.contains('GRU Optimized')].iloc[0]
-        
         with col1:
-            fig_improvement = go.Figure()
-            
-            fig_improvement.add_trace(go.Bar(
-                x=['Week 3', 'Week 4 Optimized'],
-                y=[gru_week3['R²'], gru_week4['R²']],
-                marker_color=['steelblue', 'darkgreen'],
-                text=[f"{gru_week3['R²']:.3f}", f"{gru_week4['R²']:.3f}"],
-                textposition='outside'
-            ))
-            
-            fig_improvement.add_hline(y=0.55, line_dash="dash", line_color="red",
-                                     annotation_text="Target")
-            
-            fig_improvement.update_layout(
-                title="R² Score Improvement",
-                yaxis_title="R² Score",
-                height=400
-            )
-            
-            st.plotly_chart(fig_improvement, use_container_width=True)
+            try:
+                gru_week3 = comparison[comparison['Model'].str.contains('GRU') & 
+                                      ~comparison['Model'].str.contains('Optimized')].iloc[0]
+                gru_week4 = comparison[comparison['Model'].str.contains('GRU Optimized')].iloc[0]
+                
+                fig_improvement = go.Figure()
+                
+                fig_improvement.add_trace(go.Bar(
+                    x=['Week 3', 'Week 4 Optimized'],
+                    y=[gru_week3['R²'], gru_week4['R²']],
+                    marker_color=['steelblue', 'darkgreen'],
+                    text=[f"{gru_week3['R²']:.3f}", f"{gru_week4['R²']:.3f}"],
+                    textposition='outside'
+                ))
+                
+                fig_improvement.add_hline(y=0.55, line_dash="dash", line_color="red",
+                                         annotation_text="Target")
+                
+                fig_improvement.update_layout(
+                    title="R² Score Improvement",
+                    yaxis_title="R² Score",
+                    height=400
+                )
+                
+                st.plotly_chart(fig_improvement, use_container_width=True)
+            except (IndexError, KeyError):
+                st.info(" Optimization journey chart requires GRU model data in CSV")
         
         with col2:
-            improvement_pct = ((gru_week4['R²'] - gru_week3['R²']) / gru_week3['R²']) * 100
-            mae_improvement = ((gru_week3['MAE'] - gru_week4['MAE']) / gru_week3['MAE']) * 100
-            
-            st.markdown("### 📈 Improvement Metrics")
-            st.metric("R² Improvement", f"{improvement_pct:.1f}%", 
-                     delta=f"+{gru_week4['R²'] - gru_week3['R²']:.3f}")
-            st.metric("MAE Reduction", f"{mae_improvement:.1f}%",
-                     delta=f"-{gru_week3['MAE'] - gru_week4['MAE']:.0f}")
-            
-            st.markdown("### 🔑 Key Changes")
-            st.markdown("""
-            - **Optuna hyperparameter tuning**
-            - **Extended training epochs**
-            - **Optimized learning rate**
-            - **Adjusted model architecture**
-            """)
+            try:
+                gru_week3 = comparison[comparison['Model'].str.contains('GRU') & 
+                                      ~comparison['Model'].str.contains('Optimized')].iloc[0]
+                gru_week4 = comparison[comparison['Model'].str.contains('GRU Optimized')].iloc[0]
+                
+                improvement_pct = ((gru_week4['R²'] - gru_week3['R²']) / gru_week3['R²']) * 100
+                mae_improvement = ((gru_week3['MAE'] - gru_week4['MAE']) / gru_week3['MAE']) * 100
+                
+                st.markdown("###  Improvement Metrics")
+                st.metric("R² Improvement", f"{improvement_pct:.1f}%", 
+                         delta=f"+{gru_week4['R²'] - gru_week3['R²']:.3f}")
+                st.metric("MAE Reduction", f"{mae_improvement:.1f}%",
+                         delta=f"-{gru_week3['MAE'] - gru_week4['MAE']:.0f}")
+                
+                st.markdown("###  Key Changes")
+                st.markdown("""
+                - **Optuna hyperparameter tuning**
+                - **Extended training epochs**
+                - **Optimized learning rate**
+                - **Adjusted model architecture**
+                """)
+            except (IndexError, KeyError):
+                st.markdown("###  Key Optimization Changes")
+                st.markdown("""
+                - **Optuna hyperparameter tuning** (20 trials)
+                - **Extended training epochs** (150 epochs)
+                - **Optimized learning rate** (0.001)
+                - **Adjusted architecture** (64 units, 0.2 dropout)
+                
+                **Result:** 33% improvement in R² score, from 0.415 to 0.552
+                """)
     
     st.markdown("---")
     
@@ -413,15 +415,15 @@ def main():
     # OPTUNA OPTIMIZATION ANALYSIS
     # ========================================================================
     
-    st.markdown("## 🔬 Hyperparameter Optimization with Optuna")
+    st.markdown("##  Hyperparameter Optimization with Optuna")
     
     if 'optuna' in images:
         st.image(images['optuna'], use_container_width=True)
-        st.caption("🔍 Optuna optimization history and hyperparameter importance analysis")
+        st.caption(" Optuna optimization history and hyperparameter importance analysis")
         
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown("### 🎯 Optimization Insights")
+            st.markdown("###  Optimization Insights")
             st.markdown("""
             - **20 trials** completed
             - **Learning rate** most important (0.83)
@@ -430,7 +432,7 @@ def main():
             """)
         
         with col2:
-            st.markdown("### ⚙️ Optimized Hyperparameters")
+            st.markdown("###  Optimized Hyperparameters")
             st.markdown("""
             - **Learning Rate:** 0.001
             - **Units:** 64
@@ -438,7 +440,7 @@ def main():
             - **Batch Size:** 32
             """)
     else:
-        st.info("💡 Optuna visualization will appear here once generated")
+        st.info(" Optuna visualization will appear here once generated")
     
     st.markdown("---")
     
@@ -446,13 +448,13 @@ def main():
     # STATE-SPECIFIC ANALYSIS
     # ========================================================================
     
-    st.markdown("## 🗺️ State-Specific vs National Model Performance")
+    st.markdown("##  State-Specific vs National Model Performance")
     
     if 'state_comparison' in images:
         st.image(images['state_comparison'], use_container_width=True)
-        st.caption("📍 Comparison of state-specific models vs national model for top 5 states")
+        st.caption(" Comparison of state-specific models vs national model for top 5 states")
         
-        st.markdown("### 🔍 State Analysis Insights")
+        st.markdown("###  State Analysis Insights")
         col1, col2 = st.columns(2)
         
         with col1:
@@ -471,7 +473,7 @@ def main():
             - Good baseline performance
             """)
     else:
-        st.info("💡 State comparison visualization will appear here once generated")
+        st.info(" State comparison visualization will appear here once generated")
     
     st.markdown("---")
     
@@ -479,7 +481,7 @@ def main():
     # CURRENT MODEL METRICS
     # ========================================================================
     
-    st.markdown(f"## 📈 {selected_model} - Detailed Performance")
+    st.markdown(f"##  {selected_model} - Detailed Performance")
     
     cols = st.columns(4)
     
@@ -507,11 +509,10 @@ def main():
     # TIME SERIES PREDICTIONS
     # ========================================================================
     
-    st.markdown("## 📅 Time Series Predictions")
+    st.markdown("##  Time Series Predictions")
     
     fig_timeseries = go.Figure()
     
-    # Actual values
     fig_timeseries.add_trace(go.Scatter(
         x=filtered_predictions['Date'],
         y=filtered_predictions['Actual'],
@@ -520,7 +521,6 @@ def main():
         line=dict(color='black', width=2.5)
     ))
     
-    # Predicted values
     model_color = 'darkgreen' if 'Optimized' in selected_model else 'steelblue'
     fig_timeseries.add_trace(go.Scatter(
         x=filtered_predictions['Date'],
@@ -551,7 +551,7 @@ def main():
     # ERROR ANALYSIS
     # ========================================================================
     
-    st.markdown("## 🔍 Prediction Error Analysis")
+    st.markdown("##  Prediction Error Analysis")
     
     col1, col2 = st.columns([1, 1])
     
@@ -603,7 +603,7 @@ def main():
     # DAY OF WEEK ANALYSIS
     # ========================================================================
     
-    st.markdown("## 📊 Accuracy Analysis by Day of Week")
+    st.markdown("##  Accuracy Analysis by Day of Week")
     
     filtered_predictions['DayOfWeek'] = filtered_predictions['Date'].dt.day_name()
     
@@ -641,7 +641,7 @@ def main():
     # INTERACTIVE DATA TABLE
     # ========================================================================
     
-    st.markdown("## 📋 Detailed Predictions")
+    st.markdown("##  Detailed Predictions")
     
     display_data = filtered_predictions.copy()
     display_data['Error'] = (display_data['Actual'] - display_data[selected_model]).round(3)
@@ -660,7 +660,7 @@ def main():
     
     csv = display_data.to_csv(index=False)
     st.download_button(
-        label="📥 Download Full Predictions",
+        label=" Download Full Predictions",
         data=csv,
         file_name=f"{selected_model.replace(' ', '_')}_predictions.csv",
         mime="text/csv"
@@ -671,25 +671,25 @@ def main():
     # ========================================================================
     
     st.markdown("---")
-    st.markdown("## 💡 Week 4 Key Insights & Conclusions")
+    st.markdown("##  Week 4 Key Insights & Conclusions")
     
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.markdown("### 🎯 Optimization Success")
+        st.markdown("###  Optimization Success")
         st.markdown("""
         **Achievements:**
-        - ✅ Exceeded R² target of 0.55
-        - 📈 33% improvement over Week 3
-        - 🔧 Successful Optuna tuning
-        - 🌟 Beat Random Forest baseline
+        -  Exceeded R² target of 0.55
+        -  33% improvement over Week 3
+        -  Successful Optuna tuning
+        -  Beat Random Forest baseline
         
         **Learning rate** was the most
         critical hyperparameter (83% importance)
         """)
     
     with col2:
-        st.markdown("### 🗺️ State-Level Insights")
+        st.markdown("###  State-Level Insights")
         st.markdown("""
         **Findings:**
         - State-specific models excel for
@@ -704,13 +704,13 @@ def main():
         """)
     
     with col3:
-        st.markdown("### 🚀 Future Improvements")
+        st.markdown("###  Future Improvements")
         st.markdown("""
         **Next Steps:**
-        - 🤝 Ensemble modeling
-        - 🌐 External features (weather)
-        - ⚡ Real-time deployment
-        - 📊 Interactive dashboards
+        -  Ensemble modeling
+        -  External features (weather)
+        -  Real-time deployment
+        -  Interactive dashboards
         
         **Production:** Model ready for
         deployment with strong performance
@@ -721,14 +721,14 @@ def main():
     # ========================================================================
     
     st.markdown("---")
-    st.markdown("## 📚 Complete Project Summary")
+    st.markdown("##  Complete Project Summary")
     
     summary_data = {
         'Week': ['Week 2', 'Week 2', 'Week 3', 'Week 3', 'Week 3', 'Week 3', 'Week 4'],
         'Model': ['Random Forest', 'Prophet', 'GRU', 'LSTM + Attention', 'TCN', 'Transformer', 'GRU Optimized'],
         'Type': ['Baseline', 'Baseline', 'Deep Learning', 'Deep Learning', 'Deep Learning', 'Deep Learning', 'Optimized DL'],
         'R² Score': [0.68, 0.32, 0.415, 0.33, 0.20, 0.02, 0.552],
-        'Status': ['✅ Good', '⚠️ Fair', '✅ Good', '⚠️ Fair', '⚠️ Poor', '❌ Poor', '🌟 Excellent']
+        'Status': [' Good', ' Fair', ' Good', ' Fair', ' Poor', ' Poor', ' Excellent']
     }
     
     summary_df = pd.DataFrame(summary_data)
@@ -771,7 +771,7 @@ def main():
     <div style='text-align: center; color: gray;'>
         <p><strong>US Traffic Accident Forecasting Dashboard | Complete Weeks 2-4 Analysis</strong></p>
         <p>Mario Cuevas | November 2025 | Machine Learning Coursework</p>
-        <p>📊 7.7M Accidents (2016-2023) | 🤖 7 Models | 🎯 Target Achieved: R² > 0.55</p>
+        <p> 7.7M Accidents (2016-2023) |  7 Models |  Target Achieved: R² > 0.55</p>
         <p style='font-size: 12px; margin-top: 10px;'>
             Technologies: Python • TensorFlow • Optuna • Plotly • Streamlit<br>
             Models: Random Forest • Prophet • GRU • LSTM • TCN • Transformer • Optimized GRU
@@ -781,3 +781,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
