@@ -84,10 +84,7 @@ This project develops and evaluates multiple forecasting models for predicting d
 
 ### Option 1: Google Colab 
 
-Open any of our pre-configured notebooks:
-
-- [Complete End-to-End Analysis](https://colab.research.google.com/github/MarioStacksnQueues/US-Collisions-2016-2023-Forecasting-Collision-Trends/blob/main/notebooks/Complete_End_to_End_Analysis.ipynb)
-- [Week 4 Optimization](https://colab.research.google.com/github/MarioStacksnQueues/US-Collisions-2016-2023-Forecasting-Collision-Trends/blob/main/notebooks/Week4_Optimization_Ablation.ipynb)
+Open any of my pre-configured notebooks
 
 ### Option 2: Local Execution
 
