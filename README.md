@@ -165,11 +165,9 @@ All deep learning models trained on:
 ![Optuna Optimization](results/optuna_optimization.png)
 
 
-![Feature Importance](reports/figures/feature_importance.png)
-*Top 10 most important features*
+![State comparison](results/state_comparison.png)
 
-![GRU Predictions](reports/figures/gru_predictions.png)
-*GRU predictions vs actual values on test set*
+![Final model comparison ](results/final_model_comparison.png)
 
 ---
 
