@@ -59,57 +59,7 @@ This project develops and evaluates multiple forecasting models for predicting d
 - **Interactive Dashboard:** Real-time visualization deployed on Streamlit Cloud
 - **Reproducible Pipeline:** Complete end-to-end workflow with Google Colab notebooks
 
----
 
-## Project Structure
-
-```
-US-Collisions-Forecasting/
-│
-├── notebooks/
-│   ├── Week1_EDA.ipynb                      # Exploratory data analysis
-│   ├── Week2_Baseline_Models.ipynb          # Random Forest & Prophet
-│   ├── Week3_Deep_Learning.ipynb            # GRU, LSTM, TCN, Transformer
-│   ├── Week4_Optimization_Ablation.ipynb    # Hyperparameter tuning & studies
-│   └── Complete_End_to_End_Analysis.ipynb   # Full project notebook
-│
-├── src/
-│   ├── data_preprocessing.py                # Data cleaning and feature engineering
-│   ├── models.py                           # Model architectures
-│   ├── training.py                         # Training utilities
-│   ├── evaluation.py                       # Metrics and visualization
-│   └── utils.py                            # Helper functions
-│
-├── dashboard/
-│   ├── app.py                              # Streamlit dashboard
-│   ├── components/                         # Dashboard components
-│   └── assets/                             # Images and styles
-│
-├── reports/
-│   ├── Technical_Report.pdf                # Final technical report
-│   ├── figures/                            # Plots and visualizations
-│   └── tables/                             # Results tables
-│
-├── data/
-│   ├── README.md                           # Data download instructions
-│   └── processed/                          # Preprocessed data (gitignored)
-│
-├── requirements.txt                         # Python dependencies
-├── environment.yml                          # Conda environment
-├── .gitignore
-├── LICENSE
-└── README.md
-```
-
----
-
-## Installation
-
-### Prerequisites
-
-- Python 3.8+
-- Git
-- (Optional) CUDA for GPU acceleration
 
 ### Setup
 
@@ -117,17 +67,6 @@ US-Collisions-Forecasting/
    ```bash
    git clone https://github.com/MarioStacksnQueues/US-Collisions-2016-2023-Forecasting-Collision-Trends.git
    cd US-Collisions-2016-2023-Forecasting-Collision-Trends
-   ```
-
-2. **Create virtual environment**
-   ```bash
-   # Using venv
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-   # Or using conda
-   conda env create -f environment.yml
-   conda activate traffic-forecast
    ```
 
 3. **Install dependencies**
@@ -142,9 +81,8 @@ US-Collisions-Forecasting/
 
 ---
 
-## Quick Start
 
-### Option 1: Google Colab (Recommended)
+### Option 1: Google Colab 
 
 Open any of our pre-configured notebooks:
 
@@ -280,7 +218,7 @@ All deep learning models trained on:
 
 ## Interactive Dashboard
 
-[Live Dashboard on Streamlit Cloud](https://us-collisions-forecast.streamlit.app)
+[Live Dashboard on Streamlit Cloud](https://us-collisions-2016-2023-forecasting-collision-trends-hqxcepft2.streamlit.app/)
 
 ### Features
 
@@ -289,32 +227,6 @@ All deep learning models trained on:
 - **State-Level Analysis:** Filter by state for granular insights
 - **Feature Importance:** Visualize which features drive predictions
 - **Forecast Display:** 7-day ahead predictions with confidence intervals
-
-### Local Dashboard
-
-```bash
-streamlit run dashboard/app.py
-```
-
-Navigate to `http://localhost:8501`
-
----
-
-## Technical Report
-
-Full technical report available: [Technical_Report.pdf](reports/Technical_Report.pdf)
-
-### Report Contents
-
-1. Abstract
-2. Introduction & Background
-3. Related Work
-4. Methodology (Data, Models, Training)
-5. Results (Performance, Ablation Studies, Optimization)
-6. Discussion (Analysis, Limitations, Insights)
-7. Conclusions & Future Work
-8. References
-9. Appendices (Code, Dashboard, Reproducibility)
 
 ---
 
@@ -358,18 +270,6 @@ ACM, 2019.
 - Jupyter Notebooks
 - Google Colab
 - Git & GitHub
-
----
-
-## Reproducibility
-
-All experiments are reproducible:
-
-1. **Seeds:** Fixed random seeds (42) for NumPy and TensorFlow
-2. **Environments:** Complete `requirements.txt` and `environment.yml`
-3. **Notebooks:** Step-by-step execution in Colab
-4. **Checkpoints:** Model weights saved for best performing models
-5. **Data:** Public dataset with clear preprocessing steps
 
 ### Hardware Requirements
 
@@ -432,8 +332,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Mario Cuevas**
 
 - GitHub: [@MarioStacksnQueues](https://github.com/MarioStacksnQueues)
-- Email: [your.email@example.com]
-- LinkedIn: [Your LinkedIn]
+- Email: [Mario.cuevas@students.cau.edu]
+- LinkedIn: [www.linkedin.com/in/mario-cuevas-b26421232]
 
 **Project Link:** https://github.com/MarioStacksnQueues/US-Collisions-2016-2023-Forecasting-Collision-Trends
 
