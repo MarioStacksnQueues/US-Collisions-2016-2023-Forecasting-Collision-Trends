@@ -162,8 +162,8 @@ All deep learning models trained on:
 
 ### Visualizations
 
-![Model Comparison](reports/figures/model_comparison.png)
-*Performance comparison across all models*
+![Optuna Optimization](results/optuna_optimization.png)
+
 
 ![Feature Importance](reports/figures/feature_importance.png)
 *Top 10 most important features*
