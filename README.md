@@ -16,7 +16,6 @@ A comprehensive machine learning project applying deep learning and traditional 
 - [Overview](#overview)
 - [Key Features](#key-features)
 - [Installation](#installation)
-- [Quick Start](#quick-start)
 - [Models Implemented](#models-implemented)
 - [Results](#results)
 - [Week-by-Week Progress](#week-by-week-progress)
